@@ -1,0 +1,22 @@
+
+ <h2><p align="center">Сменить руководителя для  {{ group_name }} {{ group_surname}} {{ group_patronymic}}</p></h2>
+
+ <h2><p align="center">Руководитель: {{  managers_patronymic }} {{managers_name}} {{ managers_surname }}</p></h2>
+
+<form method="post">
+    <label>Выберите руководителя:</label>
+
+
+    <label>
+        <select name="id_manager">
+            {% for m in managers_ %}
+
+                <option value="{{ m.id }}" {% if m.id == group.id_manager %}selected{% endif %}>
+                    {{ m.name }} {{ m.surname }} {{m.patronymic}}
+                </option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <button type="submit">Обновить</button>
+</form>

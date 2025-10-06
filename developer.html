@@ -1,0 +1,14 @@
+    {% extends "layout.html" %}
+    {% block body %}
+
+        <h2><p align="center">Руководитель: {{sd_salary_post}} {{sd_name}} {{sd_surname}} {{sd_patronymic}}</p></h2>
+
+    {%- for d in dv %}
+            <ul>
+                <li> ФИО:  {{d.patronymic | safe }} {{d.name | safe}} {{d.surname | safe }}</li>
+                <li> Должность: {{d.salary_d.post}} </li>
+
+            </ul>
+            <hr>
+        {%- endfor %}
+    {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <h2><p align="center">Руководитель: {{managers__salary_post}} {{managers__name}} {{managers__surname}} {{managers__patronymic}}</p></h2>
+
+{%- for gr in group %}
+        <ul>
+            <li> ФИО:  {{gr.patronymic}} {{gr.name}} {{gr.surname}}</li>
+              <li> Должность: {{gr.salary_gr.post}} </li>
+
+        </ul>
+        <hr>
+    {%- endfor %}
+{% endblock %}

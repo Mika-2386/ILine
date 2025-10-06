@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <h2><p align="center">Все сотрудники</p></h2>
+<ul>
+<form method="get" action="{{ url_for('Search') }}">
+<label>
+    <input type="text" name="search" placeholder="Поиск по ФИО" value="{{ request.args.get('search', '') }}">
+</label>
+    <button type="submit">Найти</button>
+</form>
+</ul>
+<ul>
+ ---------Сортировка списка----------
+</ul>
+
+
+
+<ul>
+    <li>
+
+        <a href="{{ url_for('Employees', sort_by='surname', order='asc') }}">
+        <button type="submit">по возрастанию</button>
+        </a>
+    </li>
+
+</ul>
+<ul>
+    <li>
+        <a href="{{ url_for('Employees', sort_by='surname', order='desc') }}">
+         <button type="submit">по убыванию </button>
+        </a>
+    </li>
+
+</ul>
+    {%- for g in general %}
+        <ul>
+            <li> ФИО: {{g.name}} {{g.surname}} {{g.patronymic}} </li>
+            <li> Должность: {{g.salary_g.post}}  </li>
+            <li> Зарплата: {{g.salary_g.salary}} </li>
+
+        </ul>
+        <hr>
+    {%- endfor %}
+    {%- for m in managers_ %}
+        <ul>
+            <li> ФИО:  {{m.patronymic}} {{m.name}} {{m.surname}}</li>
+            <li> Должность: {{m.salary_m.post}} </li>
+            <li> Зарплата: {{m.salary_m.salary}} </li>
+            <li>
+                <a href="{{ url_for ('director_by_manager', id_general_manager=m.general.id) }}" > Руководитель: {{m.general.name}} {{m.general.surname}} {{m.general.patronymic}} </a>
+            </li>
+
+        </ul>
+        <hr>
+    {%- endfor %}
+   {%- for gr in group %}
+        <ul>
+            <li> ФИО:  {{gr.patronymic}} {{gr.name}} {{gr.surname}}</li>
+            <li> Должность: {{gr.salary_gr.post}} </li>
+            <li> Зарплата: {{gr.salary_gr.salary}} </li>
+            <li>
+                <a href="{{ url_for ('director_by_leader', id_manager=gr.managers_.id) }}" > Руководитель: {{gr.managers_.name}} {{gr.managers_.surname}} {{gr.managers_.patronymic}} </a>
+            </li>
+            <li>
+
+                <a href="{{ url_for ('update_group_leader', id_group_leader=gr.id) }}">
+    <button type="submit">Сменить руководителя</button>
+                </a>
+
+            </li>
+        </ul>
+        <hr>
+    {%- endfor %}
+   {%- for s in sd %}
+        <ul>
+            <li> ФИО:  {{s.patronymic}} {{s.name}} {{s.surname}}</li>
+            <li> Должность: {{s.salary_sd.post}} </li>
+            <li> Зарплата: {{s.salary_sd.salary}} </li>
+            <li>
+                <a href="{{ url_for ('director_by_senior', id_group_leader=s.group.id) }}" > Руководитель: {{s.group.name}} {{s.group.surname}} {{s.group.patronymic}} </a>
+            </li>
+            <li>
+
+                <a href="{{ url_for ('update_senior_developer', id_senior_developer=s.id) }}">
+    <button type="submit">Сменить руководителя</button>
+                </a>
+
+            </li>
+        </ul>
+        <hr>
+    {%- endfor %}
+   {%- for d in dv %}
+        <ul>
+            <li> ФИО:  {{d.patronymic}} {{d.name}} {{d.surname}}</li>
+            <li> Должность: {{d.salary_d.post}} </li>
+            <li> Зарплата: {{d.salary_d.salary}} </li>
+            <li>
+                <a href="{{ url_for ('director_by_developer', id_senior_developer=d.sd.id) }}" > Руководитель: {{d.sd.name}} {{d.sd.surname}} {{d.sd.patronymic}} </a>
+            </li>
+              <li>
+
+                <a href="{{ url_for ('update_developer', id_developer=d.id) }}">
+    <button type="submit">Сменить руководителя</button>
+                </a>
+
+            </li>
+        </ul>
+        <hr>
+    {%- endfor %}
+{% endblock %}

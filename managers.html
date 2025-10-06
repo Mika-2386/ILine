@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <h2><p align="center">Руководитель: {{general_salary_post}} {{general_name}} {{general_surname}} {{general_patronymic}}</p></h2>
+<li>
+    <a href="{{ url_for('Employees', model='manager', sort_by='surname', order='desc') }}">По фамилии (убывание)</a>
+</li>
+{%- for m in managers_ %}
+
+        <ul>
+            <li> ФИО:  {{m.patronymic}} {{m.name}} {{m.surname}}</li>
+            <li> Должность: {{m.salary_m.post}} </li>
+
+        </ul>
+        <hr>
+    {%- endfor %}
+{% endblock %}
